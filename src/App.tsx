@@ -1,25 +1,65 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import { CssBaseline, AppBar, Toolbar, Container } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+  appBarColor: {
+    backgroundColor: '#625750',
+  },
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  mainContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 function App() {
+
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+
+      <AppBar className={classes.appBarColor} position="relative">
+        <Toolbar>
+          <BookmarksIcon className={classes.icon} />
+          <Typography variant="h6" color="inherit" noWrap>
+            React Bookmarks
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <main>
+        <div className={classes.mainContent}>
+          <Container maxWidth="lg">
+            <Typography component="h3" variant="h4" align="center" color="textPrimary" gutterBottom>
+              React Bookmarks
+            </Typography>            
+          </Container>
+        </div>
+      </main>
+
+      <footer className={classes.footer}>
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+          Dirk Mittmann 2020
+        </Typography>
+      </footer>
+
+    </React.Fragment>
   );
 }
 
