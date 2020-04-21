@@ -3,8 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import { CssBaseline, AppBar, Toolbar, Container } from '@material-ui/core';
-import BookmarkService from './Bookmarks/BookmarkService';
-import Bookmark from './Bookmarks/Bookmark';
+import BookmarkList from './Bookmarks/BookmarkList';
 
 const useStyles = makeStyles(theme => ({
   appBarColor: {
@@ -32,9 +31,6 @@ function App() {
 
   const classes = useStyles();
 
-  const bookmarkService = new BookmarkService();
-  const testBookmark = bookmarkService.getBookmarks()[0];
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -54,7 +50,7 @@ function App() {
             <Typography component="h3" variant="h4" align="center" color="textPrimary" gutterBottom>
               React Bookmarks
             </Typography>
-            <Bookmark bookmark={testBookmark} />
+            <BookmarkList />
           </Container>
         </div>
       </main>
