@@ -3,6 +3,7 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { Grid, Paper, Typography, Link, IconButton } from "@material-ui/core";
+import BookmarkEditForm from "./BookmarkEditForm";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -16,14 +17,25 @@ interface BookmarkProps {
     bookmark: BookmarkType,
 }
 
-const Bookmark = (bookmarkProps: BookmarkProps) => {
+const Bookmark: React.FC<BookmarkProps> = (bookmarkProps) => {
 
     const classes = useStyles();
 
-    const currBookmark = bookmarkProps.bookmark;
+    const [currBookmark, setCurrentBookmark] = React.useState(bookmarkProps.bookmark);
+
+    const [editFormOpen, setEditFormOpen] = React.useState(false);
+
+    const handleBookmarkEditFormOpen = () => {
+        setEditFormOpen(true);
+    }
+
+    const handleBookmarkEditFormClose = () => {
+        setEditFormOpen(false);
+    }
 
     return(
         <React.Fragment>
+            <BookmarkEditForm open={editFormOpen} bookmark={currBookmark} onClose={handleBookmarkEditFormClose} />
             <Grid container spacing={6}>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
@@ -35,7 +47,7 @@ const Bookmark = (bookmarkProps: BookmarkProps) => {
                             </Grid>
                             <Grid item xs={2}>
                                 <Grid container justify="flex-end">
-                                    <IconButton size="small" color="primary">
+                                    <IconButton size="small" color="primary" onClick={handleBookmarkEditFormOpen}>
                                         <EditIcon />
                                     </IconButton>
                                 </Grid>
