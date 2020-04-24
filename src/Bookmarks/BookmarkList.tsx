@@ -32,7 +32,7 @@ const BookmarkList: React.FunctionComponent = () => {
                 <Grid item xs={12}>
                     {
                         bookmarks.map((bookmark: BookmarkType) => {
-                            return <Bookmark bookmark={bookmark} />
+                            return <Bookmark bookmark={bookmark} key={bookmark.id} />
                         })
                     }
                 </Grid>
