@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 interface BookmarkProps {
     bookmark: BookmarkType,
+    onReloadList?: any,
 }
 
 const Bookmark: React.FC<BookmarkProps> = (bookmarkProps) => {
@@ -42,9 +43,15 @@ const Bookmark: React.FC<BookmarkProps> = (bookmarkProps) => {
         bookmarkService.updateBookmark(bookmark);
     }
 
+    const handleBookmarkEditFormDelete = (bookmark: BookmarkType) => {
+        setEditFormOpen(false);
+        bookmarkService.deleteBookmark(bookmark);
+        bookmarkProps.onReloadList();
+    }
+
     return(
         <React.Fragment>
-            <BookmarkEditForm open={editFormOpen} bookmark={currBookmark} onClose={handleBookmarkEditFormClose} onSave={handleBookmarkEditFormSave} />
+            <BookmarkEditForm open={editFormOpen} bookmark={currBookmark} onClose={handleBookmarkEditFormClose} onSave={handleBookmarkEditFormSave} onDelete={handleBookmarkEditFormDelete} />
             <Grid container spacing={6}>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>

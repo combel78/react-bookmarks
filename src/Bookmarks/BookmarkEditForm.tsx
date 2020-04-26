@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from "react";
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, makeStyles, Theme, createStyles, FormControl } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, makeStyles, Theme, createStyles, FormControl, IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,6 +18,7 @@ interface BookmarkEditFormProps {
     bookmark: BookmarkType,
     onClose: any,
     onSave: any,
+    onDelete?: any
 }
 
 const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps) => {
@@ -61,6 +63,10 @@ const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps
         bookmarkEditFormProps.onSave(saveObject);
     }
 
+    const handleDelete = () => {
+        bookmarkEditFormProps.onDelete(bookmarkEditFormProps.bookmark);
+    }
+
     return (
         <div>
             <Dialog open={bookmarkEditFormProps.open} aria-labelledby="form-dialog-title" maxWidth="sm" fullWidth={true}>
@@ -95,6 +101,11 @@ const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
+                    {bookmarkEditFormProps.onDelete !== undefined &&
+                        <IconButton size="small" color="secondary" onClick={handleDelete} >
+                            <DeleteIcon />
+                        </IconButton>
+                    }
                     <Button color="primary" onClick={handleCancel}>
                         Abbrechen
                     </Button>
