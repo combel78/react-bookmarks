@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { Grid, Paper, Typography, Link, IconButton } from "@material-ui/core";
 import BookmarkEditForm from "./BookmarkEditForm";
+import BookmarkService from "./BookmarkService";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -21,6 +22,8 @@ const Bookmark: React.FC<BookmarkProps> = (bookmarkProps) => {
 
     const classes = useStyles();
 
+    const bookmarkService = new BookmarkService();
+
     const [currBookmark, setCurrentBookmark] = React.useState(bookmarkProps.bookmark);
 
     const [editFormOpen, setEditFormOpen] = React.useState(false);
@@ -33,9 +36,15 @@ const Bookmark: React.FC<BookmarkProps> = (bookmarkProps) => {
         setEditFormOpen(false);
     }
 
+    const handleBookmarkEditFormSave = (bookmark: BookmarkType) => {
+        setCurrentBookmark(bookmark);
+        setEditFormOpen(false);
+        bookmarkService.updateBookmark(bookmark);
+    }
+
     return(
         <React.Fragment>
-            <BookmarkEditForm open={editFormOpen} bookmark={currBookmark} onClose={handleBookmarkEditFormClose} />
+            <BookmarkEditForm open={editFormOpen} bookmark={currBookmark} onClose={handleBookmarkEditFormClose} onSave={handleBookmarkEditFormSave} />
             <Grid container spacing={6}>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
