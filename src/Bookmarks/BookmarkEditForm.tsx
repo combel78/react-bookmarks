@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, makeStyles, Theme, createStyles, FormControl } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,6 +16,7 @@ interface BookmarkEditFormProps {
     open: boolean,
     bookmark: BookmarkType,
     onClose: any,
+    onSave: any,
 }
 
 const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps) => {
@@ -23,11 +24,41 @@ const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps
     const classes = useStyles();
 
     const [inputName, setInputName] = React.useState(bookmarkEditFormProps.bookmark.name);
+
+    
     const [inputUrl, setInputUrl] = React.useState(bookmarkEditFormProps.bookmark.url);
     const [inputDescription, setInputDescription] = React.useState(bookmarkEditFormProps.bookmark.description);
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        switch (e.target.id) {
+            case 'bookmark_name': {
+                setInputName(e.target.value);
+                break;
+            }
+            case 'bookmark_url': {
+                setInputUrl(e.target.value);
+                break;
+            }
+            case 'bookmark_description': {
+                setInputDescription(e.target.value);
+                break;
+            }
+        }
+    }
+
     const handleCancel = () => {
         bookmarkEditFormProps.onClose();
+    }
+
+    const handleSave = () => {
+        const saveObject: BookmarkType = {
+            id: bookmarkEditFormProps.bookmark.id,
+            name: inputName,
+            url: inputUrl,
+            description: inputDescription
+        }
+        bookmarkEditFormProps.onSave(saveObject);
     }
 
     return (
@@ -43,18 +74,21 @@ const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps
                             id="bookmark_name"
                             className={classes.formElement}
                             label="Name" value={inputName}
+                            onChange={handleChange}
                             autoFocus
                             fullWidth />
                         <TextField id="bookmark_url"
                             className={classes.formElement}
                             label="URL"
                             value={inputUrl}
+                            onChange={handleChange}
                             fullWidth />
                         <TextField
                             id="bookmark_description"
                             className={classes.formElement}
                             label="Beschreibung"
                             value={inputDescription}
+                            onChange={handleChange}
                             multiline
                             rows="2"
                             fullWidth />
@@ -64,7 +98,7 @@ const BookmarkEditForm: React.FC<BookmarkEditFormProps> = (bookmarkEditFormProps
                     <Button color="primary" onClick={handleCancel}>
                         Abbrechen
                     </Button>
-                    <Button variant="contained" autoFocus  color="secondary">
+                    <Button variant="contained" autoFocus  color="secondary" onClick={handleSave}>
                         Speichern
                     </Button>
                 </DialogActions>
